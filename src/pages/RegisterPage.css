@@ -1,0 +1,105 @@
+/* Most structural styling is inherited from LoginPage.css for the split-card class */
+
+.register-form-pane {
+  padding-top: 24px;
+}
+
+.wizard-progress {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px; /* Super tight */
+}
+
+.progress-step {
+  flex: 1;
+  height: 4px;
+  border-radius: 4px;
+  background-color: var(--color-border);
+  transition: background-color 0.4s ease;
+}
+
+.progress-step.active {
+  background-color: var(--color-accent-blue);
+}
+
+.register-header-right {
+  margin-bottom: 4px; /* Super tight */
+}
+
+.step-desc {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px; /* Super tight */
+  line-height: 1.5;
+  text-align: center;
+}
+
+.wizard-content {
+  position: relative;
+  /* Removed arbitrary min-height so it shrink-wraps perfectly around the current step */
+}
+
+.inline-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.otp-container.boxed-otp {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 16px 0 32px;
+}
+
+.otp-box-rounded {
+  width: calc(100% / 6 - 8px);
+  aspect-ratio: 1/1.2;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  transition: all 0.2s ease;
+}
+
+.otp-box-rounded:focus {
+  outline: none;
+  border-color: var(--color-accent-blue);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+  transform: translateY(-2px);
+}
+
+.form-row-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-text {
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  padding: 14px 16px;
+  transition: color 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-text:hover {
+  color: var(--color-text-primary);
+}
+
+.inline-btn {
+  flex: 1;
+  margin-top: 0;
+}
+
+.auth-form {
+  gap: 8px; /* Extremely tight gap to offset the additional checkbox row */
+}

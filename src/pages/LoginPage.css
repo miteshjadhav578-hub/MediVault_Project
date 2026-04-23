@@ -1,0 +1,331 @@
+/* Global Auth Background */
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  background-color: var(--color-bg-primary); /* Same as landing page */
+  padding: 24px;
+  overflow: hidden;
+}
+
+.auth-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  opacity: 1; /* Restore full vibrant glow overlay */
+}
+
+/* Back Link */
+.auth-back-link {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: #6a7482;
+  transition: color 0.2s ease;
+  z-index: 10;
+}
+
+.auth-back-link:hover {
+  color: var(--color-text-primary);
+}
+
+/* Master Glass Card */
+.auth-card.split-card {
+  width: 100%;
+  max-width: 1040px; 
+  padding: 0; 
+  border-radius: 32px; 
+  z-index: 2;
+  /* Thicker liquid rim to really push the 'glass' border */
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15), inset 0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 0 40px rgba(255, 255, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  
+  /* Pushed the frost tint and blur higher */
+  background: rgba(255, 255, 255, 0.22); 
+  backdrop-filter: blur(60px) saturate(180%);
+  -webkit-backdrop-filter: blur(60px) saturate(180%);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+@media (min-width: 768px) {
+  .auth-card.split-card {
+    flex-direction: row;
+    min-height: 640px; /* Restored back to the original symmetrical 640px look */
+  }
+}
+
+/* Left Information Pane (Glassy) */
+.auth-info-pane {
+  flex: 1;
+  padding: 56px; /* Restored original padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  justify-content: center;
+}
+
+.auth-branding {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.auth-logo-small {
+  height: 26px;
+}
+
+.auth-brand-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.info-heading {
+  font-size: 1.8rem;
+  font-weight: 700; /* Made heading bold per request */
+  color: #2d3748;
+  margin-top: 24px; /* Pull it down into the visual center */
+  margin-bottom: 24px;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.4);
+  text-align: center;
+}
+
+.info-graphic-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto 24px;
+}
+
+.info-graphic {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.95;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.1));
+}
+
+.info-graphic.auth-main-logo {
+  max-width: 260px; /* Allow logo to scale up prominently */
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.12));
+}
+
+.info-description {
+  font-size: 1rem;
+  color: #4a5568;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  max-width: 340px; /* Relaxed max-width so short text doesn't arbitrarily wrap */
+  font-weight: 400;
+}
+
+.info-disclaimer-container {
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  width: 80%;
+}
+
+.info-disclaimer {
+  font-size: 0.85rem;
+  color: #718096;
+}
+
+/* Right Form Wrapper */
+.auth-form-pane-wrapper {
+  flex: 1.2;
+  padding: 32px; /* Larger padding creates the thick liquid border wrap effect */
+  display: flex;
+}
+
+/* Right Form Pane (Nested Liquid Glass Card) */
+.auth-form-pane {
+  flex: 1;
+  /* Slightly more transparent here to increase liquid depth */
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(50px) saturate(140%);
+  -webkit-backdrop-filter: blur(50px) saturate(140%);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  padding: 48px 48px; /* Restored original 48px padding for Login Page */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), inset 0 0 0 2px rgba(255, 255, 255, 0.65);
+}
+
+.auth-header-right {
+  text-align: center;
+  margin-bottom: 24px; /* Compress vertical gap */
+}
+
+.auth-header-right h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1a202c;
+  letter-spacing: -0.02em;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px; /* Increased gap to balance missing SSO block */
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #2d3748;
+}
+
+.forgot-link {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #3182ce;
+  transition: opacity 0.2s ease;
+}
+
+.forgot-link:hover {
+  opacity: 0.8;
+}
+
+/* Boxed Layout for Inputs */
+.input-wrapper.boxed {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper.boxed input {
+  width: 100%;
+  padding: 14px 44px 14px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.12); /* Concrete border against white glass */
+  border-radius: 12px;
+  background: #ffffff; /* Solid white background */
+  font-size: 0.95rem;
+  color: #2d3748;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.input-wrapper.boxed input:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15), inset 0 1px 2px rgba(0,0,0,0.01);
+}
+
+.input-wrapper.boxed input::placeholder {
+  color: #a0aec0;
+}
+
+.input-icon-right {
+  position: absolute;
+  right: 16px;
+  color: #a0aec0;
+  pointer-events: none;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #a0aec0;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.password-toggle-btn:hover {
+  color: #4a5568;
+}
+
+.password-toggle-btn:focus {
+  outline: none;
+}
+
+.pill-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 8px;
+  border-radius: 100px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.glossy-btn {
+  background: linear-gradient(135deg, rgba(77, 163, 255, 0.7) 0%, rgba(0, 113, 227, 0.85) 100%);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 10px 24px rgba(0, 113, 227, 0.3), 
+    inset 0 2px 4px rgba(255, 255, 255, 0.6), 
+    inset 0 -4px 10px rgba(0, 50, 100, 0.25);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.glossy-btn:hover {
+  transform: translateY(-2px) scale(1.01);
+  background: linear-gradient(135deg, rgba(94, 176, 255, 0.8) 0%, rgba(0, 119, 239, 0.9) 100%);
+  box-shadow: 
+    0 14px 28px rgba(0, 113, 227, 0.4), 
+    inset 0 2px 6px rgba(255, 255, 255, 0.8), 
+    inset 0 -4px 10px rgba(0, 50, 100, 0.2);
+}
+
+.glossy-btn:active {
+  transform: translateY(1px);
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.8) 0%, rgba(0, 90, 180, 0.9) 100%);
+  box-shadow: 
+    0 4px 12px rgba(0, 113, 227, 0.2), 
+    inset 0 4px 8px rgba(0, 0, 0, 0.2),
+    inset 0 -1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.auth-footer-text {
+  text-align: center;
+  margin-top: 40px; /* Pushed further down to anchor the card bottom */
+  font-size: 0.875rem;
+  color: #4a5568;
+}
+
+.auth-footer-text a {
+  font-weight: 600;
+  color: #1a202c;
+}

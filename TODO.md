@@ -1,0 +1,1 @@
+# Date Filter Enhancement for ActivityLog&#10;&#10;Removed date picker feature as per user request due to persistent selection bugs. Kept search and type filters. Page fully functional with complete CSS.&#10;
