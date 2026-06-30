@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,6 +24,9 @@ const variants = {
 };
 
 const RegisterPage = () => {
+  const [username, setUsername] = useState("");
+const [password, setPassword] = useState("");
+const [confirmPassword, setConfirmPassword] = useState("");
   const [[page, direction], setPage] = useState([0, 0]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -35,10 +39,34 @@ const RegisterPage = () => {
     setPage([page + newDirection, newDirection]);
   };
 
-  const handleComplete = (e) => {
-    e.preventDefault();
-    navigate('/login');
-  };
+const handleComplete = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch("http://localhost:5000/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      alert("Registration Successful");
+      navigate("/login");
+    } else {
+      alert(data.message);
+    }
+  } catch (error) {
+    console.log(error);
+    alert("Server Error");
+  }
+};
 
   return (
     <div className="auth-container">
@@ -168,19 +196,17 @@ const RegisterPage = () => {
                     </div>
                   </div>
 
-                  <div className="input-group terms-checkbox-group" style={{ marginTop: '8px', marginBottom: '8px' }}>
-                    <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '0.85rem', color: 'var(--color-text-secondary)', cursor: 'pointer', textAlign: 'left', textTransform: 'none', letterSpacing: 'normal' }}>
-                      <input 
-                        type="checkbox" 
-                        required 
-                        checked={termsAccepted}
-                        onChange={(e) => setTermsAccepted(e.target.checked)}
-                        style={{ marginTop: '3px', cursor: 'pointer' }}
-                      />
-                      <span>
-                        I accept the <button type="button" onClick={() => setShowTerms(true)} style={{ background: 'none', border: 'none', padding: 0, color: 'var(--color-accent-blue)', textDecoration: 'underline', cursor: 'pointer', fontSize: 'inherit', fontFamily: 'inherit' }}>Terms & Conditions and Privacy Policies</button>.
-                      </span>
-                    </label>
+                  <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', marginTop: '8px', marginBottom: '8px' }}>
+                    <input 
+                      type="checkbox" 
+                      required 
+                      checked={termsAccepted}
+                      onChange={(e) => setTermsAccepted(e.target.checked)}
+                      style={{ width: '15px', height: '15px', flexShrink: 0, cursor: 'pointer' }}
+                    />
+                    <span style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: '1.4' }}>
+                      I accept the <button type="button" onClick={() => setShowTerms(true)} style={{ background: 'none', border: 'none', padding: 0, color: 'var(--color-accent-blue)', textDecoration: 'underline', cursor: 'pointer', fontSize: 'inherit', fontFamily: 'inherit' }}>Terms & Conditions and Privacy Policies</button>.
+                    </span>
                   </div>
 
                   <button type="submit" className="auth-submit-btn pill-btn glossy-btn inline-submit">
@@ -253,7 +279,13 @@ const RegisterPage = () => {
                   <div className="input-group">
                     <label>Create Admin Username</label>
                     <div className="input-wrapper boxed">
-                      <input type="text" placeholder="admin_sarah" required />
+                      <input
+                      type="text"
+                      placeholder="admin_sarah"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                    />
                       <User size={18} className="input-icon-right" />
                     </div>
                   </div>
@@ -261,11 +293,12 @@ const RegisterPage = () => {
                   <div className="input-group">
                     <label>Secure Password</label>
                     <div className="input-wrapper boxed">
-                      <input 
-                        type={showPassword ? "text" : "password"} 
-                        placeholder="••••••••" 
-                        required 
-                      />
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="••••••••"
+                        value={password}
+                       onChange={(e) => setPassword(e.target.value)}
+                       required/>
                       <button 
                         type="button" 
                         className="password-toggle-btn"
@@ -280,10 +313,12 @@ const RegisterPage = () => {
                   <div className="input-group">
                     <label>Confirm Password</label>
                     <div className="input-wrapper boxed">
-                      <input 
-                        type={showConfirmPassword ? "text" : "password"} 
-                        placeholder="••••••••" 
-                        required 
+                      <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="••••••••"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
                       />
                       <button 
                         type="button" 

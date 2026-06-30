@@ -1,20 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Webcam from "react-webcam";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Fingerprint, CheckCircle2, X } from 'lucide-react';
 import './BiometricModal.css';
 
-const BiometricModal = ({ 
-  isOpen, 
-  onClose, 
-  onScanSuccess, 
-  onEnrollSuccess, 
+const BiometricModal = ({
+  isOpen,
+  onClose,
+  onScanSuccess,
+  onEnrollSuccess,
   isEnroll = false,
   title,
   subtitle
 }) => {
+
+  const webcamRef = useRef(null);
   const [scanProgress, setScanProgress] = useState(0);
   const [status, setStatus] = useState('scanning'); // 'scanning', 'success', 'error', 'conflict'
   const [fingerDetected, setFingerDetected] = useState(false);
+
+  const captureFace = () => {
+  const imageSrc = webcamRef.current.getScreenshot();
+
+  if (!imageSrc) {
+    alert("Face capture failed");
+    return;
+  }
+
+  console.log("Face Captured");
+
+  setStatus("success");
+
+  setTimeout(() => {
+    onClose();
+    onEnrollSuccess?.(imageSrc);
+  }, 1500);
+};
 
   useEffect(() => {
     let interval;
@@ -74,7 +95,7 @@ const BiometricModal = ({
           setStatus('success');
           setTimeout(() => {
             onClose();
-            onEnrollSuccess?.();
+            onEnrollSuccess?.(imageSrc);
           }, 1500);
         }
       } else {
@@ -106,7 +127,7 @@ const BiometricModal = ({
         };
       case 'error':
         return {
-          title: 'No Fingerprint Detected',
+          title: 'No Face Detected',
           desc: 'Scanning timed out. Please ensure finger is placed firmly on the scanner.',
           icon: <X size={90} className="error-icon" />,
           theme: 'error-theme'
@@ -144,12 +165,30 @@ const BiometricModal = ({
           </button>
 
           <div className="scan-content">
-            <div className={`scan-icon-wrapper ${status !== 'scanning' ? 'status-active' : ''}`}>
-              {content.icon}
-              {status === 'scanning' && <div className="scanning-line" />}
-              {status === 'processing' && <div className="scanning-line fast" />}
-            </div>
+            {status === "scanning" ? (
+            <>
+              <Webcam
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                style={{
+                  width: "100%",
+                  borderRadius: "12px",
+                  marginBottom: "20px"
+                }}
+              />
 
+              <button
+                className="btn-finalize-enroll"
+                onClick={captureFace}
+              >
+                Capture Face
+              </button>
+            </>
+          ) : (
+            <div className="scan-icon-wrapper status-active">
+              {content.icon}
+            </div>
+          )}
             <div className="text-group">
               <h3>{content.title}</h3>
               <p>{content.desc}</p>

@@ -41,12 +41,55 @@ const PatientEnrollmentForm = ({ onBack }) => {
     setIsBiometricActive(true);
   };
 
-  const handleBiometricSuccess = () => {
-    setIsBiometricActive(false);
-    alert('New Patient Digital ID Created & Synchronized to MediVault Network Successfully!');
-    onBack();
-  };
+const handleBiometricSuccess = async (faceImage) => {
+  console.log("FACE IMAGE:", faceImage);
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/patients",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+  fullName: formData.fullName,
+  dob: formData.dob,
+  gender: formData.gender,
+  bloodGroup: formData.bloodGroup,
+  phone: formData.phone,
 
+  e1Relation: formData.e1Relation,
+  e1Name: formData.e1Name,
+  e1Phone: formData.e1Phone,
+
+  e2Relation: formData.e2Relation,
+  e2Name: formData.e2Name,
+  e2Phone: formData.e2Phone,
+
+  faceImage: faceImage
+})
+      }
+    );
+
+    const data = await response.json();
+
+    if (data.success) {
+      setIsBiometricActive(false);
+
+      alert(
+        `Patient Saved Successfully\nID: ${data.patient.patientId}`
+      );
+
+      onBack();
+    } else {
+      alert("Failed to save patient");
+    }
+
+  } catch (error) {
+    console.log(error);
+    alert("Server Error");
+  }
+};
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -262,7 +305,7 @@ const PatientEnrollmentForm = ({ onBack }) => {
       <BiometricModal 
         isOpen={isBiometricActive}
         onClose={() => setIsBiometricActive(false)}
-        onScanSuccess={handleBiometricSuccess}
+        onEnrollSuccess={handleBiometricSuccess}
         title="Staff Authorization"
         subtitle="Dr. or Staff fingerprint required to finalize enrollment"
       />

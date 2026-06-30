@@ -9,9 +9,15 @@ const DashboardHome = () => {
   const [isScanning, setIsScanning] = useState(false);
   const [isEnrolling, setIsEnrolling] = useState(false);
   const [viewMode, setViewMode] = useState('grid'); // 'grid', 'scan-result', 'enroll-form'
+  const [matchedPatient, setMatchedPatient] = useState(null);
 
   if (viewMode === 'scan-result') {
-    return <PatientScanResult onBack={() => setViewMode('grid')} />;
+    return (
+  <PatientScanResult
+    onBack={() => setViewMode('grid')}
+    scannedPatient={matchedPatient}
+  />
+);
   }
 
   if (viewMode === 'enroll-form') {
@@ -128,7 +134,26 @@ const DashboardHome = () => {
     <BiometricModal 
       isOpen={isScanning} 
       onClose={() => setIsScanning(false)} 
-      onScanSuccess={() => setViewMode('scan-result')}
+      onScanSuccess={async () => {
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/patients"
+    );
+
+    const patients = await response.json();
+
+    if (patients.length > 0) {
+      setMatchedPatient(patients[0]); // temporary
+      setViewMode('scan-result');
+    } else {
+      alert("No patients found");
+    }
+
+  } catch (error) {
+    console.log(error);
+    alert("Server Error");
+  }
+}}
       subtitle="Please place patient finger on physical scanner"
     />
 

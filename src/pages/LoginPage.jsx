@@ -12,11 +12,33 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    navigate('/dashboard');
-  };
+  const handleLogin = async (e) => {
+  e.preventDefault();
 
+  try {
+    const response = await fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: email,
+        password: password,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      navigate("/dashboard");
+    } else {
+      alert("Invalid Username or Password");
+    }
+  } catch (error) {
+    console.error("Login Error:", error);
+    alert("Server Error");
+  }
+};
   return (
     <div className="auth-container">
       {/* Absolute positioning to fill the background entirely */}

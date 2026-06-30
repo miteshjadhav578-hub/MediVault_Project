@@ -6,7 +6,7 @@ import BiometricModal from '../../components/dashboard/BiometricModal';
 import { FinalConfirmModal } from '../../components/dashboard/InpatientManagementModals';
 import './PatientScanResult.css';
 
-const PatientScanResult = ({ onBack }) => {
+const PatientScanResult = ({ onBack, scannedPatient }) => {
   const [zoomedSection, setZoomedSection] = useState(null);
   const [fullViewItem, setFullViewItem] = useState(null);
   const [chatInput, setChatInput] = useState('');
@@ -25,24 +25,16 @@ const PatientScanResult = ({ onBack }) => {
   const [newEntryFile, setNewEntryFile] = useState(null);
   const newEntryFileRef = useRef(null);
 
-  const [patient, setPatient] = useState({
+  const [patient, setPatient] = useState(
+  scannedPatient || {
     fullName: "Arjun Verma",
     id: "MV-2026-9941",
     age: "58 yrs",
     gender: "Male",
-    bloodGroup: "A+",
-    phone: "98444 XXXXX",
-    initials: "AV",
-    colorClass: "avatar-light-blue",
-    status: "Active Patient",
-    reasonShort: "General Clinical Profile",
-    emergencyContact: { relation: "Son", name: "Rahul Verma", phone: "98111 XXXXX" },
-    emergencyContact2: { relation: "Brother", name: "Ashok Verma", phone: "98222 XXXXX" },
-    treatments: ["Aspirin 75mg", "Atorvastatin 40mg"],
-    history: ["Type 2 Diabetes", "Hypertension since 2018"],
-    reports: ["Echo.pdf", "Stress_Test.pdf"],
-    allergies: ["Peanuts", "Penicillin", "Lactose"]
-  });
+    bloodGroup: "A+"
+  }
+);
+
 
   const [localPatientData, setLocalPatientData] = useState(null);
 

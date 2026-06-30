@@ -7,7 +7,8 @@
 .wizard-progress {
   display: flex;
   gap: 8px;
-  margin-bottom: 12px; /* Super tight */
+  margin-bottom: 12px;
+  /* Super tight */
 }
 
 .progress-step {
@@ -23,13 +24,15 @@
 }
 
 .register-header-right {
-  margin-bottom: 4px; /* Super tight */
+  margin-bottom: 4px;
+  /* Super tight */
 }
 
 .step-desc {
   font-size: 0.95rem;
   color: var(--color-text-secondary);
-  margin-bottom: 8px; /* Super tight */
+  margin-bottom: 8px;
+  /* Super tight */
   line-height: 1.5;
   text-align: center;
 }
@@ -101,5 +104,16 @@
 }
 
 .auth-form {
-  gap: 8px; /* Extremely tight gap to offset the additional checkbox row */
+  gap: 8px;
+  /* Extremely tight gap to offset the additional checkbox row */
+}
+
+/* Ensure the terms checkbox label stays as a flex row, overriding the generic .input-group label block rule */
+.terms-checkbox-group label {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: fit-content !important;
+  gap: 10px;
 }
